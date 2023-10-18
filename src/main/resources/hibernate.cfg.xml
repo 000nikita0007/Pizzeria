@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Настройки подключения к базе данных -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pizza_world</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin</property>
+
+        <!-- Настройки Hibernate -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">false</property>
+
+        <!-- Маппинг классов -->
+        <mapping class="com.example.pizza_world.bean.Feedback"/>
+        <mapping class="com.example.pizza_world.bean.Order"/>
+        <mapping class="com.example.pizza_world.bean.OrderStatus"/>
+        <mapping class="com.example.pizza_world.bean.PositionOrderMap"/>
+        <mapping class="com.example.pizza_world.bean.Position"/>
+        <mapping class="com.example.pizza_world.bean.Role"/>
+        <mapping class="com.example.pizza_world.bean.Size"/>
+        <mapping class="com.example.pizza_world.bean.User"/>
+    </session-factory>
+</hibernate-configuration>

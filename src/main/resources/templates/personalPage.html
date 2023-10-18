@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Личный кабинет</title>
+    <meta charset="UTF-8">
+    <script src="/js/search.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header th:insert="parts/header :: header"></header>
+<div class="container mt-5">
+    <h2>Личный кабинет</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="needs-validation" th:action="@{/userUpdate}" method="post">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="login" class="form-label">Логин</label>
+                        <input type="text" class="form-control" th:value="${user.login}" id="login" name="login" readonly>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone" class="form-label">Телефон</label>
+                        <input type="text" class="form-control" th:value="${user.phone}" id="phone" name="phone">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="birthDate" class="form-label">Дата рождения</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDay"
+                               th:value="${#dates.format(user.birthDay, 'yyyy-MM-dd')}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="button" class="form-label" style="color: #cccccc" th:text="' .'"></label>
+                        <br class="form-label">
+                        <button id="button" type="submit" class="btn btn-success">Подтвердить</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="col-md-4" th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text=" ${error.defaultMessage}"> Error message</p>
+            </div>
+            <div class="col-md-4" th:if="${error}">
+                <p style="color: red" th:text=" ${error}"> Error message</p>
+            </div>
+            <div class="col-md-4" th:if="${failure}">
+                <p style="color: red" th:text="${failure}"> </p>
+            </div>
+            <div class="col-md-4" th:if="${success}">
+                <p style="color: limegreen" th:text="${success}"> </p>
+            </div>
+            <form th:action="@{/changePassword}" method="post">
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" name="oldPassword" placeholder="Текущий пароль">
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" name="newPassword" placeholder="Новый пароль">
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Изменить пароль</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>
+                Мои заказы
+            </h3>
+            <br>
+            <div class="table-container">
+                <table border="1" align="center">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Дата</th>
+                        <th>Статус</th>
+                        <th><input style="width: 120px" class="form-control" type="text" id="elastic" placeholder="&#128270;"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="elastic">
+                    <tr th:each="order, stat : ${userOrders}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td th:text="${#dates.format(order.creationDate, 'dd.MM.yyyy')}"></td>
+                        <td>
+                        <span th:switch="${order.orderStatus.id}">
+                            <span th:case="1" style="color: #0b35da">В обработке</span>
+                            <span th:case="2" style="color:orange">Готов</span>
+                            <span th:case="3" style="color:green">Получен</span>
+                            <span th:case="4" style="color:red">Отменен</span>
+                        </span>
+                        </td>
+                        <td>
+                            <a th:href="@{/orderPage(orderId=${order.id})}" class="btn btn-primary">Инфо</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr class="my-4">
+</div>
+</body>
+</html>

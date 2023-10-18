@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/common.css">
+    <title>Отзывы</title>
+</head>
+<body>
+<header th:insert="parts/header :: header"></header>
+<div class="container mt-5">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-5">
+            <h2>
+                Пожалуйста, оставьте свой отзыв
+            </h2>
+            <br>
+            <form th:action="@{/leaveAnOrder}" method="post">
+                <span>Оценка:</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="number" placeholder="(1-5)" max="5" min="1" required name="mark">
+                    </div>
+                    <div class="col-md-6">
+                        <p style="color: red" th:each="error : ${errors}" th:text=" ${error.defaultMessage}"> Error
+                            message</p>
+                    </div>
+                </div>
+                <div class="col-md-4" th:if="${errors}">
+                </div>
+                <div class="input-group">
+                            <textarea placeholder="Отзыв" name="text" class="form-control" aria-label="With textarea"
+                            ></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Отправить</button>
+            </form>
+            <br>
+            <br>
+            <img class="mb-4" src="/static/feedback.png">
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-6">
+            <h2>
+                Отзывы клиентов
+            </h2>
+            <br>
+            <div style="max-height: 800px" class="log-container">
+                <div class="row" th:each="feedback : ${feedbackList}">
+                    <div class="input-group">
+                        <span class="input-group-text" th:text="${feedback.user.login} + ' - '
+                        + ${feedback.mark} + '/5'">With textarea</span>
+                        <textarea readonly class="form-control" th:text="${feedback.text}" aria-label="With textarea"></textarea>
+                        <span >
+                            <a th:if="${user.role.id==1}" th:href="@{/admin/deleteFeedback(id=${feedback.id})}" class="btn btn-danger" type="button">X</a>
+                        </span>
+                        <span >
+                            <a th:if="${user.id==feedback.user.id}" th:href="@{/deleteFeedback(id=${feedback.id})}" class="btn btn-danger" type="button">X</a>
+                        </span>
+                    </div>
+                    <hr style="color: white">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<div th:fragment="header">
+    <header class="p-3 text-bg-dark">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/home" class="nav-link px-2 text-secondary">Главная</a></li>
+                <li><a href="/bucket" class="nav-link px-2 text-white">Корзина</a></li>
+                <li>
+                    <a href="/bucket">
+                        <img src="/static/pngwing.com.png" alt="Корзина" class="rounded-circle me-2" width="40">
+                    </a>
+                </li>
+                <li th:if ="${user}" ><a th:if="${user.role.id==1}" href="/admin" class="nav-link px-2 text-white">Администрация</a></li>
+                <li><a href="/feedback" class="nav-link px-2 text-white">Отзывы</a></li>
+                <li>
+                    <div class="container">
+                        <h3 style="color: #ffab00"> +123-45-6789</h3>
+                    </div>
+                </li>
+                <li>
+                    <div class="container">
+                        <h3 style="color: #ffab00"> PIZZA WORLD</h3>
+                    </div>
+                </li>
+            </ul>
+
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+
+            </form>
+
+            <div class="text-end">
+                <div th:if="${user==null}">
+                    <a type="button" href="/login" class="btn btn-outline-light me-2">Login</a>
+                    <a type="button" href="/registration" class="btn btn-warning">Sign-up</a>
+                </div>
+                <div th:if="${user}">
+                    <a data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong style="color: white" th:text="${user.login}">login</strong>
+                        <svg class="bi bi-caret-down-fill" width="16" height="16" fill="white" viewBox="0 0 16 16">
+                            <path d="M8 11.172l4.223-4.223a1 1 0 0 1 1.414 1.414l-5 5a1 1 0 0 1-1.414 0l-5-5a1 1 0 1 1 1.414-1.414L8 11.172z"/>
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="/personalPage">Личный кабинет</a></li>
+                        <li><a class="dropdown-item" href="/logout" style="color: red">Выход</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
+</div>
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Пользователь</title>
+    <meta charset="UTF-8">
+    <script src="/js/search.js"></script>
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header th:insert="parts/header :: header"></header>
+<div class="container mt-5">
+
+    <form class="needs-validation" th:action="@{/admin/userEdit}" method="post">
+        <h2 id="basic-example">Пользователь<a class="anchor-link" href="#basic-example"
+                                              aria-label="Link to this section: Basic example"></a></h2>
+        <div class="row g-3">
+            <div class="col-sm-4">
+                <label for="login" class="form-label">Логин</label>
+                <input type="text" class="form-control" th:value="${updateUser.login}" id="login" name="" readonly>
+                <input type="hidden" name="userId" th:value="${updateUser.id}">
+            </div>
+            <div class="col-sm-4">
+                <label for="phone" class="form-label">Телефон</label>
+                <input type="text" class="form-control" th:value="${updateUser.phone}" id="phone" name="" readonly>
+            </div>
+            <div class="col-sm-4">
+                <label for="birthDate" class="form-label">Дата рождения</label>
+                <input type="text" th:value="${#dates.format(updateUser.birthDay, 'dd.MM.yyyy')}" class="form-control"
+                       id="birthDate" readonly name=""
+                       required>
+            </div>
+            <div class="col-md-4" >
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="roleId" th:value="1" th:text="ROLE_ADMIN"
+                           th:checked="${updateUser.role.id==1}"/>
+                </label>
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="roleId" th:value="2" th:text="ROLE_USER"
+                           th:checked="${updateUser.role.id!=1}"/>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Подтвердить</button>
+            </div>
+            <div class="col-md-4">
+                <a th:href="@{/admin/userDelete(id=${updateUser.id})}" type="button" class="btn btn-danger">Удалить
+                    пользователя</a>
+            </div>
+        </div>
+        <hr class="my-4">
+    </form>
+</div>
+</body>
+</html>
